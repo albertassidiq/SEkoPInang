@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/livewire.js'])
 
     <!-- Styles -->
     @livewireStyles
@@ -69,7 +69,7 @@
 
     @stack('modals')
 
-    @livewireScripts
+    @livewireScriptConfig
 </body>
 
 </html>

@@ -5,22 +5,22 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "~8.5.12",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.19",
-        "laravel/jetstream": "^3.0",
-        "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.11"
+        "laravel/framework": "^13.38",
+        "laravel/jetstream": "^5.5",
+        "laravel/sanctum": "^4.3",
+        "laravel/tinker": "^3.0",
+        "livewire/livewire": "^4.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "nunomaduro/collision": "^8.9",
+        "phpunit/phpunit": "^13.0",
+        "spatie/laravel-ignition": "^2.12"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +35,14 @@
         }
     },
     "scripts": {
+        "pre-install-cmd": [
+            "@php scripts/check-php-runtime.php"
+        ],
+        "pre-update-cmd": [
+            "@php scripts/check-php-runtime.php"
+        ],
+        "check:php": "@php scripts/check-php-runtime.php",
+        "test": "@php vendor/phpunit/phpunit/phpunit",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -58,6 +66,7 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
+        "platform-check": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }

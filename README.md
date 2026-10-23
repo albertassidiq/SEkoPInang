@@ -4,6 +4,8 @@
 
 Aplikasi web berbasis Laravel untuk mendata, memantau, dan memvisualisasikan data kedai kopi di Kota Tanjungpinang dalam rangka mendukung kegiatan **Sensus Ekonomi (SE)** oleh Badan Pusat Statistik Kota Tanjungpinang.
 
+**Update keamanan 23 Oktober 2026:** aplikasi menargetkan PHP **8.5.12+ (cabang 8.5)**. Upgrade dan restart PHP di VPS tetap wajib; push kode tidak menambal runtime server. Ikuti [panduan penanganan php2shell](docs/security/php2shell-2026.md).
+
 ---
 
 ## 📋 Tentang Proyek
@@ -34,7 +36,7 @@ Semua data terkumpul dalam satu **dashboard monitor publik** yang dapat diakses 
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Laravel 9 + PHP 8.0+
+- **Framework:** Laravel 13 + PHP 8.5.12+ pada cabang 8.5
 - **Frontend:** Blade + Tailwind CSS v3 (via Vite)
 - **Auth:** Laravel Jetstream + Sanctum + Livewire
 - **Database:** MySQL
@@ -47,9 +49,9 @@ Semua data terkumpul dalam satu **dashboard monitor publik** yang dapat diakses 
 
 ### Prerequisites
 
-- PHP >= 8.0
+- PHP 8.5.12 atau patch stabil 8.5 yang lebih baru
 - Composer
-- Node.js >= 16 + npm
+- Node.js 22.12+ atau 24 LTS + npm (untuk Vite 7)
 - MySQL
 
 ### Langkah-langkah
@@ -60,10 +62,11 @@ git clone https://github.com/albertassidiq/SEkoPInang.git
 cd SEkoPInang
 
 # 2. Install dependencies PHP
+php scripts/check-php-runtime.php
 composer install
 
 # 3. Install dependencies Node
-npm install
+npm ci
 
 # 4. Copy file environment
 cp .env.example .env

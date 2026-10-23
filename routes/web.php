@@ -15,7 +15,7 @@ use App\Http\Controllers\KedaiKopiController;
 */
 
 // Route untuk form kedai kopi MANDIRI (public access)
-Route::get('/', [KedaiKopiController::class, 'create'])->name('form');
+Route::get('/', [KedaiKopiController::class, 'create']);
 Route::get('/form', [KedaiKopiController::class, 'create'])->name('form');
 Route::post('/kedai-kopi', [KedaiKopiController::class, 'store'])->name('kedai-kopi.store');
 
