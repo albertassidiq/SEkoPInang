@@ -20,7 +20,7 @@ Pada 23 Oktober 2026, sumber dan lockfile divalidasi dengan PHP 8.5.12, Composer
 
 Preflight menerima PHP 8.5.12 dan menolak PHP 8.2.12; pengujian batas versi mencakup patch rentan, RC/beta, versi tidak valid dan cabang di luar target. Build Vite berhasil; config/route/view cache berhasil dibuat. Browser mengonfirmasi login, penyimpanan profil setelah reload, modal konfirmasi password dan setup/batal 2FA tanpa error JavaScript. Review kode independen tidak menemukan blocker pada perubahan ini.
 
-Workflow GitHub Actions menambahkan pemeriksaan SQLite dan MySQL 8.4 pada PHP 8.5.12. Hasil CI dan bukti produksi tetap merupakan pemeriksaan terpisah; verifikasi lokal tidak membuktikan versi PHP VPS.
+Workflow GitHub Actions memeriksa SQLite dan MySQL 8.4 pada PHP 8.5.12. [Run 39935279822](https://github.com/albertassidiq/SEkoPInang/actions/runs/39935279822) pada commit `cb1ba45` berhasil di kedua database: masing-masing 37 tes / 87 assertion / 8 skip, audit, instalasi dependency dengan autoloader teroptimasi, build dan cache produksi. Hasil CI dan bukti produksi tetap merupakan pemeriksaan terpisah; hasil tersebut tidak membuktikan versi PHP VPS.
 
 ## Sebelum pemeliharaan
 
