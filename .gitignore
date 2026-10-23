@@ -7,6 +7,8 @@
 .env
 .env.backup
 .env.production
+.env.docker
+.env.mysql
 .phpunit.result.cache
 .phpunit.cache/
 .playwright-mcp/

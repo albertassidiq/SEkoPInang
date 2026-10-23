@@ -4,7 +4,7 @@
 
 Aplikasi web berbasis Laravel untuk mendata, memantau, dan memvisualisasikan data kedai kopi di Kota Tanjungpinang dalam rangka mendukung kegiatan **Sensus Ekonomi (SE)** oleh Badan Pusat Statistik Kota Tanjungpinang.
 
-**Update keamanan 23 Oktober 2026:** aplikasi menargetkan PHP **8.5.12+ (cabang 8.5)**. Upgrade dan restart PHP di VPS tetap wajib; push kode tidak menambal runtime server. Ikuti [panduan penanganan php2shell](docs/security/php2shell-2026.md).
+**Update keamanan 23 Oktober 2026:** aplikasi menargetkan PHP **8.5.12+ (cabang 8.5)**. Rebuild dan ganti container PHP di VPS tetap wajib; push kode tidak menambal container yang sedang berjalan. Ikuti [panduan Docker](docs/docker.md) dan [penanganan php2shell](docs/security/php2shell-2026.md).
 
 ---
 
@@ -46,6 +46,8 @@ Semua data terkumpul dalam satu **dashboard monitor publik** yang dapat diakses 
 ---
 
 ## 🚀 Instalasi
+
+Untuk deployment Docker, gunakan [Dockerfile, Compose dan panduan produksi](docs/docker.md). Image sudah mencakup PHP/Apache, dependency produksi dan aset Vite; Composer/Node tidak diperlukan pada host VPS.
 
 ### Prerequisites
 

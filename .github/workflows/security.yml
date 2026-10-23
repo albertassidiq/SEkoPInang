@@ -73,3 +73,37 @@ jobs:
       DB_PORT: '3306'
       DB_USERNAME: root
       DB_PASSWORD: test-only-password
+
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Prepare isolated Docker environment
+        run: |
+          sh -n docker/entrypoint.sh
+          sh -n tests/docker/smoke.sh
+          cp .env.docker.example .env.docker
+          sed -i 's|^APP_KEY=.*|APP_KEY=base64:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=|' .env.docker
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=test-only-docker-password/' .env.docker
+          printf 'MYSQL_ROOT_PASSWORD=test-only-docker-root-password\n' > .env.mysql
+          printf 'DOCKER_TEST_CANARY=must-not-enter-image\n' > .env
+          printf 'must-not-enter-image\n' > database/docker-canary.sql
+          printf 'http://must-not-enter-image.test:5173\n' > public/hot
+          chmod 600 .env.docker .env.mysql
+          docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml config --quiet
+      - name: Build production image
+        run: docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml build --pull app
+      - name: Migrate isolated database and start web container
+        run: |
+          docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml up -d --wait --wait-timeout 120 db
+          docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml run --rm app php artisan migrate --force
+          docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml up -d --wait --wait-timeout 120 app
+      - name: Verify running production image
+        run: sh tests/docker/smoke.sh
+      - name: Container logs on failure
+        if: failure()
+        run: docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml logs --no-color --tail=100
+      - name: Remove ephemeral CI containers and volumes
+        if: always()
+        run: docker compose --env-file .env.docker --env-file .env.mysql -f compose.yaml -f compose.mysql.yaml down --volumes --remove-orphans

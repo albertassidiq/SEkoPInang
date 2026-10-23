@@ -10,6 +10,7 @@
   </testsuites>
   <php>
     <env name="APP_ENV" value="testing"/>
+    <env name="TRUSTED_PROXIES" value="172.30.0.1" force="true"/>
     <env name="APP_KEY" value="base64:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY="/>
     <env name="BCRYPT_ROUNDS" value="4"/>
     <env name="CACHE_DRIVER" value="array"/>

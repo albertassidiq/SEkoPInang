@@ -4,6 +4,8 @@ Referensi: [advisori PHP 21 Oktober 2026](https://www.php.net/archive/2026.php#2
 
 ## Status dan batas perbaikan
 
+Deployment aplikasi telah dikonfirmasi menggunakan **Docker**. Gunakan [panduan Docker project](../docker.md): rebuild image PHP bertambal, recreate seluruh container/worker dan verifikasi runtime aktif. Memperbarui PHP pada host VPS saja tidak memperbarui PHP di dalam container.
+
 Perbaikan kedua CVE ada di **runtime PHP**, bukan di Laravel. Commit/push repository, Composer, middleware, `.htaccess`, WAF, atau `ini_set()` tidak memperbaiki PHP yang rentan. Pada mod_php, jalur eksploitasi dapat terjadi sebelum kode aplikasi dijalankan.
 
 Sesuai permintaan memakai rilis stabil terbaru, project ini menargetkan **PHP 8.5.12 atau patch stabil 8.5 yang lebih baru**, Laravel 13, Jetstream 5 dan Livewire 4. PHP 8.4.27, 8.3.36 dan 8.2.35 juga memperbaiki kedua CVE upstream, tetapi cabang tersebut bukan target aplikasi setelah upgrade ini. Paket distributor dengan backport harus dibuktikan melalui advisori vendor; preflight konservatif project hanya menerima versi upstream pada cabang target.
