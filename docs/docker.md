@@ -29,11 +29,12 @@ docker compose --env-file .env.docker build --pull app
 Jika ownership volume lama berbeda, sesudah memastikan volume benar dan backup tersedia, jalankan satu kali:
 
 ```sh
-docker compose --env-file .env.docker run --rm --user root app \
+docker compose --env-file .env.docker run --rm --user root \
+  --cap-add CHOWN --cap-add DAC_OVERRIDE app \
   chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 ```
 
-Periksa runtime dan status migrasi menggunakan image baru:
+Capability tambahan tersebut hanya untuk perbaikan ownership satu kali; container aplikasi normal tetap membuang semua capability. Periksa runtime dan status migrasi menggunakan image baru:
 
 ```sh
 docker compose --env-file .env.docker run --rm app php scripts/check-php-runtime.php

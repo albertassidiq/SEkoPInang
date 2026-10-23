@@ -63,5 +63,20 @@ status=$(curl --silent --output /dev/null --write-out '%{http_code}' "$base_url/
 compose exec -T app rm storage/app/public/docker-blocked.php
 test "$status" = 403
 
+# Simulate a legacy volume with another UID and private directory permissions.
+compose run --rm --no-deps --user root --cap-add CHOWN --cap-add DAC_OVERRIDE app sh -ec '
+    mkdir storage/app/docker-legacy
+    printf legacy > storage/app/docker-legacy/probe
+    chmod 700 storage/app/docker-legacy
+    chown -R 65534:65534 storage/app/docker-legacy
+'
+compose run --rm --no-deps --user root --cap-add CHOWN --cap-add DAC_OVERRIDE app \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+compose exec -T app sh -ec '
+    test -r storage/app/docker-legacy/probe
+    rm storage/app/docker-legacy/probe
+    rmdir storage/app/docker-legacy
+'
+
 test "$(docker inspect --format '{{.State.Health.Status}}' "$container")" = healthy
-echo 'Docker runtime, permissions, startup guards, assets, HTTP routes and health checks passed.'
+echo 'Docker runtime, permissions, legacy volume repair, startup guards, assets, HTTP routes and health checks passed.'
