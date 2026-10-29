@@ -5,9 +5,9 @@ FROM composer:2.10.3@sha256:b6dcd72ca98fa19d0e5b8476de179859704891fad06dd9e0b968
 # This is the patched web runtime as well as the PHP dependency build runtime.
 FROM php:8.5.12-apache-bookworm@sha256:5e4418695f9b13b75edefaff547125bf6be267e865931731bdd5946461505736 AS php-base
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libicu72 libzip4 libicu-dev libzip-dev \
-    && docker-php-ext-install -j"$(nproc)" bcmath intl pdo_mysql zip \
-    && apt-get purge -y --auto-remove libicu-dev libzip-dev \
+    && apt-get install -y --no-install-recommends libicu72 libpq5 libzip4 libicu-dev libpq-dev libzip-dev \
+    && docker-php-ext-install -j"$(nproc)" bcmath intl pdo_mysql pdo_pgsql pgsql zip \
+    && apt-get purge -y --auto-remove libicu-dev libpq-dev libzip-dev \
     && rm -rf /var/lib/apt/lists/* \
     && cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 WORKDIR /var/www/html
